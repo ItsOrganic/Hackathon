@@ -8,11 +8,18 @@ import {PluginConfig, Plugins} from './types/PluginConfig.sol';
 
 contract DummyPlugin is AlgebraPlugin {
     error onlyPoolAllowed();
+    error notVerifiedAddress();
 
     PluginConfig private constant _defaultPluginConfig = PluginConfig.wrap(0); // does nothing
 
-    /// @notice the Algebra Integral pool
     IAlgebraPool public immutable pool;
+
+    mapping(address => bool) private verifiedAddresses;
+
+    modifier onlyVerified() {
+        require(verifiedAddresses[msg.sender], "Caller is not a verified address");
+        _;
+    }
 
     modifier onlyPool() {
         _checkOnlyPool();
@@ -27,8 +34,19 @@ contract DummyPlugin is AlgebraPlugin {
         return _defaultPluginConfig.unwrap();
     }
 
-    /// @inheritdoc IAlgebraPlugin
-    function beforeInitialize(address sender, uint160 sqrtPriceX96) external onlyPool returns (bytes4) {
+    function addToWhitelist(address _address) external onlyPool {
+        verifiedAddresses[_address] = true;
+    }
+
+    function removeFromWhitelist(address _address) external onlyPool {
+        verifiedAddresses[_address] = false;
+    }
+
+    function isAddressVerified(address _address) external view returns (bool) {
+        return verifiedAddresses[_address];
+    }
+
+    function beforeInitialize(address sender, uint160 sqrtPriceX96) external onlyVerified returns (bytes4) {
         sender; // suppress warning
         sqrtPriceX96; //suppress warning
 
