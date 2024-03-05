@@ -6,7 +6,7 @@ import {IAlgebraPool} from '@cryptoalgebra/integral-core/contracts/interfaces/IA
 import {PoolInteraction} from './libraries/PoolInteraction.sol';
 import {PluginConfig, Plugins} from './types/PluginConfig.sol';
 
-contract DummyPlugin is AlgebraPlugin {
+contract WhitelistPluginDemo is AlgebraPlugin {
     error onlyPoolAllowed();
     error notVerifiedAddress();
 

@@ -2,6 +2,8 @@
 
 This project is intended to simplify the process of creating a new plugin for Algebra Integral AMM. Along with the standard hardhat boilerplate, this repository includes a number of contracts that may be useful when creating a plugin.
 
+Using the template I have created a Plugin to add/remove user to whitelist so only those people can access certain pool before pool initialization or after pool initialization to access certain pools or use any functionalities like swaps and arbitrage.
+
 ## Docs
 
 The current documentation page is located at: <a href="https://cryptoalgebra.gitbook.io/">https://cryptoalgebra.gitbook.io/</a>
@@ -21,4 +23,16 @@ Install dependencies:
 
 ```shell
 npm i
+```
+
+Compile Program:
+
+```shell
+npm run compile
+```
+
+Run test files:
+
+```shell
+npm run test
 ```
